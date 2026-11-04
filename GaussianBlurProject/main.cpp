@@ -15,7 +15,7 @@ int main() {
 
     std::cout << "Maksymalna liczba watkow: " << omp_get_max_threads() << std::endl;
 
-    const string filepath = "C:\\Users\\janek\\Downloads\\Lena.png";
+    const string filepath = "./Lena.png";
     const int kernelSize = 150;
     
     DataLoader dataLoader;
