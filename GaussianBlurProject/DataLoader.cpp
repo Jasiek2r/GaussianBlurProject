@@ -1,4 +1,5 @@
 #include "DataLoader.h"
+#include <iostream>
 #include <opencv2/opencv.hpp>
 
 void DataLoader::Load(std::string path) {
