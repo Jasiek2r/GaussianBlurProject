@@ -23,7 +23,22 @@ int main() {
 
     if (dataLoader.HasImage()) {
         cv::Mat image = dataLoader.GetImage();
+        
+        // Pomiar czasu rozpoczęcia
+        double start = omp_get_wtime();
+
+        // Wykonanie filtra Gaussa
         cv::Mat result = GaussianBlur::Process(image, kernelSize);
+
+        // Pomiar czasu zakończenia
+        double end = omp_get_wtime();
+
+        // Obliczenie czasu wykonania
+        double elapsed = end - start;
+
+        std::cout << "Czas wykonania filtra Gaussa: "
+            << elapsed << " sekund" << std::endl;
+        
         cv::imwrite("Lena_rozmyta.png", result);
     }
 
