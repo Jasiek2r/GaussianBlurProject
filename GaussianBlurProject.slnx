@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="GaussianBlurProject/GaussianBlurProject.vcxproj" Id="e94a81ab-d6b7-40e4-96b6-f110fe4860dd" />
+</Solution>
