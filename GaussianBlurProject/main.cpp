@@ -84,7 +84,7 @@ int main() {
 
     return 0;
 }
-int print_stats(vector<double> times) {
+void print_stats(vector<double> times) {
     // Obliczanie statystyk
     double sum = accumulate(times.begin(), times.end(), 0.0);
     double mean = sum / repetitions;
