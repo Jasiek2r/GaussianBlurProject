@@ -1,12 +1,12 @@
-#include "GaussianBlur.h"
+#include "GaussianBlurSerial.h"
 
-#include "GaussianBlur.h"
+#include "GaussianBlurSerial.h"
 #include <omp.h>
 #include <cmath>
 #include <vector>
 #include <iostream>
 
-cv::Mat GaussianBlur::Process(const cv::Mat& inputImage, int kernelSize, double sigma)
+cv::Mat GaussianBlurSerial::Process(const cv::Mat& inputImage, int kernelSize, double sigma)
 {
     if (inputImage.empty() || inputImage.type() != CV_8UC3) {
         std::cerr << "Błąd: Obraz musi być niepusty i w formacie 8-bitowym RGB/BGR (CV_8UC3)." << std::endl;
