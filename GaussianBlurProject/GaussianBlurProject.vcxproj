@@ -148,11 +148,13 @@
   <ItemGroup>
     <ClCompile Include="DataLoader.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
+    <ClCompile Include="GaussianBlurSerial.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataLoader.h" />
     <ClInclude Include="GaussianBlur.h" />
+    <ClInclude Include="GaussianBlurSerial.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\Lena.png" />

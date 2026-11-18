@@ -30,12 +30,18 @@
     <ClCompile Include="GaussianBlur.cpp">
       <Filter>Pliki źródłowe\GaussianBlur</Filter>
     </ClCompile>
+    <ClCompile Include="GaussianBlurSerial.cpp">
+      <Filter>Pliki źródłowe\GaussianBlur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GaussianBlur.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="DataLoader.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianBlurSerial.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
   </ItemGroup>

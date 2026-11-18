@@ -4,4 +4,5 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="GaussianBlurProject/GaussianBlurProject.vcxproj" Id="e94a81ab-d6b7-40e4-96b6-f110fe4860dd" />
+  <Project Path="GaussianBlurProjectCuda/GaussianBlurProjectCuda.vcxproj" Id="6461272a-28cb-4b91-bf31-c0ec72dd7f40" />
 </Solution>

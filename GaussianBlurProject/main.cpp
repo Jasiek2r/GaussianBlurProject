@@ -10,8 +10,13 @@
 
 #include "DataLoader.h"
 #include "GaussianBlur.h"
+#include "GaussianBlurSerial.h"
 
 using namespace std;
+
+const string filepath = "./Lena.png";
+const int kernelSize = 150;
+const int repetitions = 100;
 
 int main() {
 #ifndef _OPENMP
@@ -21,10 +26,6 @@ int main() {
 
     cout << "Maksymalna liczba watkow: "
         << omp_get_max_threads() << endl;
-
-    const string filepath = "./Lena.png";
-    const int kernelSize = 150;
-    const int repetitions = 100;
 
     DataLoader dataLoader;
     dataLoader.Load(filepath);
@@ -44,7 +45,9 @@ int main() {
     result = GaussianBlur::Process(image, kernelSize);
 
     vector<double> times;
+    vector<double> times_serial;
     times.reserve(repetitions);
+    times_serial.reserve(repetitions);
 
     // 100 pomiarow
     for (int i = 0; i < repetitions; i++) {
@@ -57,9 +60,35 @@ int main() {
         times.push_back((end - start) * 1000.0);
     }
 
+    // 100 pomiarow
+    for (int i = 0; i < repetitions; i++) {
+        double start = omp_get_wtime();
+
+        result = GaussianBlurSerial::Process(image, kernelSize);
+
+        double end = omp_get_wtime();
+
+        times_serial.push_back((end - start) * 1000.0);
+    }
+
+    print_stats(times);
+    print_stats(times_serial);
+
+    // Zapis ostatniego wyniku
+    if (!cv::imwrite("Lena_rozmyta.png", result)) {
+        cerr << "Blad zapisu obrazu!" << endl;
+        return 1;
+    }
+
+    cout << "Wynik zapisany: Lena_rozmyta.png" << endl;
+
+    return 0;
+}
+int print_stats(vector<double> times) {
     // Obliczanie statystyk
     double sum = accumulate(times.begin(), times.end(), 0.0);
     double mean = sum / repetitions;
+
 
     // Odchylenie standardowe z probki
     double squaredSum = 0.0;
@@ -93,14 +122,4 @@ int main() {
     cout << "Maksymalny czas: " << *minMax.second << " ms" << endl;
 
     cout << "====================================" << endl;
-
-    // Zapis ostatniego wyniku
-    if (!cv::imwrite("Lena_rozmyta.png", result)) {
-        cerr << "Blad zapisu obrazu!" << endl;
-        return 1;
-    }
-
-    cout << "Wynik zapisany: Lena_rozmyta.png" << endl;
-
-    return 0;
 }
