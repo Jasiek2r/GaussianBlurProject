@@ -1,7 +1,6 @@
 #include "GaussianBlurSerial.h"
 
 #include "GaussianBlurSerial.h"
-#include <omp.h>
 #include <cmath>
 #include <vector>
 #include <iostream>

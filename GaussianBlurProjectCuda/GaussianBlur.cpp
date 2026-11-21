@@ -76,29 +76,37 @@ cv::Mat GaussianBlur::Process(const cv::Mat& inputImage, int kernelSize, double 
 {
     if (inputImage.empty()) return cv::Mat();
 
-    int width = inputImage.cols;
-    int height = inputImage.rows;
-    size_t imgSize = width * height * 3 * sizeof(unsigned char);
-    size_t kernelBytes = kernelSize * kernelSize * sizeof(float);
+    if (kernelSize % 2 == 0) {
+        kernelSize++;
+    }
+    const int radius = kernelSize / 2;
 
-    // Generowanie wag filtra Gaussa na CPU
-    if (sigma <= 0.0) sigma = 0.3 * ((kernelSize - 1) * 0.5 - 1) + 0.8; // standardowy wzór OpenCV
-    std::vector<float> h_kernel(kernelSize * kernelSize);
-    float r = kernelSize / 2;
-    float s = 2.0 * sigma * sigma;
-    float sum = 0.0;
+    if (sigma <= 0.0) {
+        sigma = 0.3 * ((kernelSize - 1) * 0.5 - 1) + 0.8;
+    }
 
-    for (int y = -r; y <= r; y++) {
-        for (int x = -r; x <= r; x++) {
-            float r_sq = x * x + y * y;
-            float val = exp(-(r_sq) / s);
-            h_kernel[(y + (int)r) * kernelSize + (x + (int)r)] = val;
+    const int width = inputImage.cols;
+    const int height = inputImage.rows;
+    const size_t imgSize = static_cast<size_t>(width) * static_cast<size_t>(height) * 3 * sizeof(unsigned char);
+
+    const size_t kDim = static_cast<size_t>(2 * radius + 1);
+    std::vector<float> h_kernel(kDim * kDim);
+    const size_t kernelBytes = h_kernel.size() * sizeof(float);
+
+    const double twoSigmaSq = 2.0 * sigma * sigma;
+    double sum = 0.0;
+
+    for (int y = -radius; y <= radius; ++y) {
+        for (int x = -radius; x <= radius; ++x) {
+            const double r_sq = static_cast<double>(x * x + y * y);
+            const float val = static_cast<float>(std::exp(-r_sq / twoSigmaSq));
+            h_kernel[(static_cast<size_t>(y + radius)) * kDim + static_cast<size_t>(x + radius)] = val;
             sum += val;
         }
     }
-    // Normalizacja
-    for (int i = 0; i < kernelSize * kernelSize; i++) {
-        h_kernel[i] /= sum;
+
+    for (float& w : h_kernel) {
+        w = static_cast<float>(w / sum);
     }
 
     // Statyczny kontekst dla uproszczenia (w produkcji warto cache'ować po rozdzielczości/kernelSize)
