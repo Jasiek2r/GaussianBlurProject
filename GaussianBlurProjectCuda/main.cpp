@@ -59,10 +59,6 @@ void print_stats(vector<double> times) {
 }
 
 int main() {
-#ifndef _OPENMP
-    cout << "OpenMP NIE jest wlaczone!" << endl;
-    return 1;
-#endif
 
     cout << "Maksymalna liczba watkow: "
         << omp_get_max_threads() << endl;
