@@ -24,11 +24,11 @@
     <ClCompile Include="main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="GaussianBlurSerial.cpp">
+      <Filter>Pliki źródłowe\GaussianBlur</Filter>
+    </ClCompile>
     <ClCompile Include="DataLoader.cpp">
       <Filter>Pliki źródłowe\DataLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="GaussianBlur.cpp">
-      <Filter>Pliki źródłowe\GaussianBlur</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -43,5 +43,13 @@
     <ClInclude Include="GaussianBlur.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="GaussianBlurSerial.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="GaussianBlur.cpp">
+      <Filter>Pliki źródłowe\GaussianBlur</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

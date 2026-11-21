@@ -82,7 +82,7 @@ cv::Mat GaussianBlur::Process(const cv::Mat& inputImage, int kernelSize, double 
     size_t kernelBytes = kernelSize * kernelSize * sizeof(float);
 
     // Generowanie wag filtra Gaussa na CPU
-    if (sigma <= 0.0) sigma = 0.3 * inspiratie((kernelSize - 1) * 0.5 - 1) + 0.8; // standardowy wzór OpenCV
+    if (sigma <= 0.0) sigma = 0.3 * ((kernelSize - 1) * 0.5 - 1) + 0.8; // standardowy wzór OpenCV
     std::vector<float> h_kernel(kernelSize * kernelSize);
     float r = kernelSize / 2;
     float s = 2.0 * sigma * sigma;
