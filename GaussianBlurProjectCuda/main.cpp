@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include <omp.h>
+#include <chrono>
 #include <string>
 #include <vector>
 #include <numeric>
@@ -13,6 +13,7 @@
 #include "GaussianBlurSerial.h"
 
 using namespace std;
+using clock_t_alias = std::chrono::steady_clock;
 
 const string filepath = "./Lena.png";
 const int kernelSize = 150;
@@ -60,9 +61,6 @@ void print_stats(vector<double> times) {
 
 int main() {
 
-    cout << "Maksymalna liczba watkow: "
-        << omp_get_max_threads() << endl;
-
     DataLoader dataLoader;
     dataLoader.Load(filepath);
 
@@ -87,24 +85,28 @@ int main() {
 
     // 100 pomiarow
     for (int i = 0; i < repetitions; i++) {
-        double start = omp_get_wtime();
+        auto start = clock_t_alias::now();
 
         result = GaussianBlur::Process(image, kernelSize);
 
-        double end = omp_get_wtime();
+        auto end = clock_t_alias::now();
 
-        times.push_back((end - start) * 1000.0);
+        double elapsed_ms = std::chrono::duration<double, std::milli>(end - start).count();
+
+        times.push_back(elapsed_ms);
     }
 
     // 100 pomiarow
     for (int i = 0; i < repetitions; i++) {
-        double start = omp_get_wtime();
+        auto start = clock_t_alias::now();
 
         result = GaussianBlurSerial::Process(image, kernelSize);
 
-        double end = omp_get_wtime();
+        auto end = clock_t_alias::now();
 
-        times_serial.push_back((end - start) * 1000.0);
+        double elapsed_ms = std::chrono::duration<double, std::milli>(end - start).count();
+
+        times_serial.push_back(elapsed_ms);
     }
 
     print_stats(times);
